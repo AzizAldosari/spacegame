@@ -7,7 +7,6 @@ import time
 from .Laser import Laser
 
 
-# import world1
 
 
 def on_screen(position):
@@ -84,14 +83,6 @@ class Boss:
             self.lasers.append(new_laser)
             self.next_laser_time = current_time + self.laser_fire_rate
 
-    def dodge(self, player):
-        # Dodge by changing shape (adjusting the rect size)
-        if self.rect.height > self.rect.width:
-            self.rect.inflate_ip(-20, 20)  # Become wider and shorter
-        else:
-            self.rect.inflate_ip(20, -20)  # Become taller and narrower
-        # Set up a timer event to reset shape after 2 seconds
-        pygame.time.set_timer(Boss.dodge_reset, 2000)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)

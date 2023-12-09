@@ -1,4 +1,3 @@
-# start_menu.py
 import pygame
 import pandas as pd
 import sys
