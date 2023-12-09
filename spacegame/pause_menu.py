@@ -13,9 +13,22 @@ def pause_menu(screen, score, kills, level, skills):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+
+                # Check if the mouse is clicked on the save button
+                if save_button.collidepoint(mouse_pos):
+                    # Call the manual save function with the current game state
+                    manual_save(level, score, kills, ','.join(skills))
+                    print("Game manually saved.")
+                elif continue_button.collidepoint(mouse_pos):
+                    pause = False
+                elif exit_button.collidepoint(mouse_pos):
+                    pygame.quit()
+                    sys.exit()
 
         # Display pause menu options
-        screen.fill((0, 0, 0))  # Fill the screen with black to indicate a paused state
+        screen.fill((0, 0, 0))  # Fill the screen with black to show that the user is in the pause screen
         font = pygame.font.Font(None, 74)
         continue_text = font.render('Continue', True, (255, 255, 255))
         save_text = font.render('Save', True, (255, 255, 255))
@@ -31,23 +44,4 @@ def pause_menu(screen, score, kills, level, skills):
         screen.blit(save_text, save_button)
         screen.blit(exit_text, exit_button)
 
-        mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
-
-        # Check for button clicks
-        if continue_button.collidepoint(mouse):
-            if click[0] == 1:
-                pause = False
-        elif save_button.collidepoint(mouse):
-            if click[0] == 1:
-                # Call the manual save function with the current game state
-                manual_save(level, score, kills, ','.join(skills))
-                print("Game manually saved.")
-        elif exit_button.collidepoint(mouse):
-            if click[0] == 1:
-                pygame.quit()
-                sys.exit()
-
         pygame.display.update()
-
-
