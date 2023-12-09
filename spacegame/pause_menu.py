@@ -1,4 +1,3 @@
-# pause_menu.py
 import pygame
 import sys
 from manual_save import manual_save
