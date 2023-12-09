@@ -54,7 +54,7 @@ def run_world1(screen, player_data=None, level=1, score=0, kills=0, skills=None)
     boss_spawned = False
     boss = None
     # to add a number of enemies needed before the boss can come
-    ENEMY_Num = 3 # small number for testing
+    ENEMY_Num = 15  # small number for testing
     # Create game objects, and player data
     if isinstance(player_data, dict):
         start_speed = player_data.get('speed', 5)
@@ -83,6 +83,8 @@ def run_world1(screen, player_data=None, level=1, score=0, kills=0, skills=None)
                 return False, False
             elif event.type == pygame.USEREVENT + 1:
                 player.reset_speed()
+            elif event.type == pygame.USEREVENT + 2 and boss_spawned:
+                boss.reset_shape()  # Reset boss shape when the event is triggered
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -156,13 +158,13 @@ def run_world1(screen, player_data=None, level=1, score=0, kills=0, skills=None)
             return False, player_score, player.level, player_kills
 
         if not boss_spawned and player_kills >= ENEMY_Num:
-            boss = Boss((400, 300), 100, boss_image_path, laser_image_path)
+            boss = Boss((400, 300), 300, boss_image_path, laser_image_path)
             boss_spawned = True
             # boss coding spawn
         if boss_spawned:
-            boss.update(player, screen)
+            boss.update(player, screen, player.bullets)
             # calling the utility based ai system
-            boss.decide_action(player)
+            boss.decide_action(player, player.bullets)
             boss.draw(screen)
 
             for laser in boss.lasers[:]:  # Iterate over a copy of the list
@@ -178,7 +180,7 @@ def run_world1(screen, player_data=None, level=1, score=0, kills=0, skills=None)
                     boss.hp -= 10  # damage the bullet does
                     # Check for collision with boss
             if player.rect.colliderect(boss.rect):
-                player.hp -= 20  # damage the boss does
+                player.hp -= 50  # damage the boss does
 
             if boss.hp <= 0:
                 pygame.mixer.music.stop()
