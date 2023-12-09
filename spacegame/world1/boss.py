@@ -7,7 +7,6 @@ import time
 from .Laser import Laser
 
 
-# import world1
 
 
 def on_screen(position):
