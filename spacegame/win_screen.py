@@ -8,7 +8,7 @@ def win_screen(screen, player_score, player_level, player_world, player_kills):
     small_font = pygame.font.SysFont(None, 50)
 
     # Texts
-    game_over_text = font.render('winning', True, (255, 0, 0))
+    game_over_text = font.render('win', True, (255, 0, 0))
     score_text = small_font.render(f'Score: {player_score}', True, (255, 255, 255))
     level_text = small_font.render(f'Level: {player_level}', True, (255, 255, 255))
     world_text = small_font.render(f'World: {player_world}', True, (255, 255, 255))
